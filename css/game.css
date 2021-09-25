@@ -1,0 +1,60 @@
+/* CSS Document */
+
+html, body {
+	
+	margin: 0 auto;
+	font-family: sans-serif;
+	font-size: 13px;
+	color: #333;
+	background: url('../img/bg.jpg') no-repeat center center fixed }
+	
+h1 {
+	margin: 2px;}
+	
+button {
+	font-size: 12px;
+	font-weight: bold;
+	padding: 8px; }
+	
+.game-image {
+			max-width: 100px;
+			height: auto;
+	}
+#game-name {
+	font-family: sans; color: rgb(255, 217, 0);
+	-webkit-text-stroke: 1.5px black;
+	text-align: center;
+	font-size: 2.8rem;
+}
+#instructions {
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+div#content {
+    width: 700px;
+    margin:0 auto;
+	  padding: 20px;
+  	background-color: rgba(162, 219, 241, 0.815) ; }
+
+div#controls {
+	font-size: large;
+	text-align: center; }
+	
+div#controls span {
+	font-weight: bold;
+	color:red;  }
+	
+div#controls button {
+	font-size: large;
+	margin-left: 20px; 
+	padding: 5px;}
+	
+
+	
+div#gamespace {
+	margin: 20px;
+	padding: 10px;
+	height: 350px;
+	background-color: rgba(255, 225, 55, 0.582);
+	border: 2px solid rgb(5, 5, 5); }
