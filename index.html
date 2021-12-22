@@ -2,7 +2,7 @@
 		Name: Mihaela Valac
 		Date: November 20, 2021
 		Class: CSCI-2447, Javascript Fundamentals
-		Project 6
+		Project 6: An interactive game created with JS, jQyery, and HTML. 
  -->
  <!DOCTYPE html>
 <html>
@@ -168,7 +168,6 @@
           $("#game-timer").html(secondsLeft + " seconds left");
           secondsLeft -= 1;
           clock = setTimeout("startTimer()", 1000);
-          removeImg();
         }
       }
 
@@ -187,6 +186,7 @@
         imgCount++;
         var random_interval = Math.floor(Math.random() * 1200);
         img_repeat = setTimeout("addImage()", random_interval);
+         removeImg();
       }
       /*Initialize the removeImage function which stores the id of each image added through attr method and push it to the img_array.
       The index number of the img id is randomly selected from the array and stored in the selectImg variable.

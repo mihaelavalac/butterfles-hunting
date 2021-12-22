@@ -1,60 +1,110 @@
 /* CSS Document */
 
-html, body {
-	
-	margin: 0 auto;
-	font-family: sans-serif;
-	font-size: 13px;
-	color: #333;
-	background: url('../img/bg.jpg') no-repeat center center fixed }
-	
-h1 {
-	margin: 2px;}
-	
-button {
-	font-size: 12px;
-	font-weight: bold;
-	padding: 8px; }
-	
-.game-image {
-			max-width: 100px;
-			height: auto;
-	}
-#game-name {
-	font-family: sans; color: rgb(255, 217, 0);
-	-webkit-text-stroke: 1.5px black;
-	text-align: center;
-	font-size: 2.8rem;
+html,
+body {
+  margin: 0 auto;
+  font-family: sans-serif;
+  font-size: 13px;
+  color: #333;
+  background: url("../img/bg.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
-#instructions {
-	text-align: center;
-	font-size: 1.5rem;
+ .nav-tabs {
+  font-size:18px;
+  font-weight: bold;
+  border-radius: 4px 4px 0 0;
+  /* background-color:rgba(162, 219, 241, 0.815); */
+   padding: 6px; 
+  margin-bottom: 5px;
+} 
+
+
+.nav-tabs > li > a {
+  background-color: rgba(162, 219, 241, 0.815);
+  color: #000000;
+  border-radius: 4px 4px 0 0;
+  line-height: 1.8;
+  
+  margin-bottom: -2px;
+  margin-right: -2px;
 }
 
-div#content {
-    width: 700px;
-    margin:0 auto;
-	  padding: 20px;
-  	background-color: rgba(162, 219, 241, 0.815) ; }
+
+
+
+
+h1 {
+  margin: 2px;
+}
+
+.game-image {
+  max-width: 50px;
+  height: auto;
+}
+
+.game-image:hover {
+  cursor: url(../img/net.png), auto;
+}
+
+#game-name {
+  font-family: sans;
+  color: rgb(255, 217, 0);
+  -webkit-text-stroke: 2px black;
+  text-align: center;
+  font-weight: bold;
+  font-size: 4rem;
+}
+
+div.content {
+  width: 800px;
+  display: block;
+  margin: 5rem auto;
+  padding: 20px;
+  background-color: rgba(162, 219, 241, 0.815);
+}
 
 div#controls {
-	font-size: large;
-	text-align: center; }
-	
-div#controls span {
-	font-weight: bold;
-	color:red;  }
-	
-div#controls button {
-	font-size: large;
-	margin-left: 20px; 
-	padding: 5px;}
-	
+  font-size: large;
+  text-align: center;
+}
 
-	
-div#gamespace {
-	margin: 20px;
-	padding: 10px;
-	height: 350px;
-	background-color: rgba(255, 225, 55, 0.582);
-	border: 2px solid rgb(5, 5, 5); }
+div#controls span {
+  font-weight: bold;
+  color: red;
+}
+
+
+div#gameSpace {
+  position: relative;
+  margin: 20px;
+  padding: 10px;
+  height: 350px;
+  background-color: rgba(255, 225, 55, 0.582);
+  border: 2px solid rgb(5, 5, 5);
+}
+
+div#instructionsSpace{
+  margin-top: 10px;
+  padding: 10px;
+  height: 350px;
+  background-color: rgba(255, 225, 55, 0.582);
+  border: 2px solid rgb(5, 5, 5);
+}
+
+
+
+div#gameSpace img {
+  position: absolute;
+}
+
+#game-timer {
+  display: none;
+  font-weight: bold;
+}
+#start_button {
+  background-color: rgba(255, 225, 55, 0.582);
+  font: bold 18px Arial;
+  width: 100px;
+  height: 40px;
+  margin: 2px 5px;
+}
