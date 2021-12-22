@@ -1,46 +1,230 @@
 <!-- 
 		Name: Mihaela Valac
-		Date: September 25th, 2021
-		Class: CSCI2447, Javascript Fundamentals
-		Project 1
+		Date: November 20, 2021
+		Class: CSCI-2447, Javascript Fundamentals
+		Project 6
  -->
-
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
+
   <head>
-
     <title>Butterflies Hunting</title>
-    
-    <!-- CSS styles: This is for me to worry about; not you. -->
-	<link href="css/game.css" rel="stylesheet" />
-  <script src="js/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="img/png" href="img/butterfly (2).png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="css/game.css" />
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
   </head>
+
   <body>
+    <div class="content">
+      <div id="demoTabs" style="background-color: transparent !important">
+        <ul class="nav nav-tabs">
+          <li><a class="active" href="#game">Game</a></li>
+          <li><a href="#instructions">Instructions</a></li>
+        </ul>
 
-	<div id="content">
+        <!-- Game Tab -->
+        <div id="game">
+          <div class="row">
+            <div class="col-3 text-center">
+              <img class="d-flex" src="img/img2.png" />
+            </div>
+            <div class="col-9">
+              <h1 id="game-name">Butterflies Hunting</h1>
+              <p id="greeting" class="text-center h4"></p>
+              <p id="instructions-1" class="text-center h4">
+                Click the Start button bellow to begin hunting butterflies!
+              </p>
+              <div id="controls">
+                <span id="score">0 points</span>
+                <button type="button" id="start_button">Start</button>
+              </div>
+              <div id="game-timer" class="text-center h4">30 seconds left</div>
+            </div>
+          </div>
+          <div id="gameSpace"></div>
+        </div>
 
-		<h1 id="game-name">Butterflies Hunting</h1>
-		
-		<p id="instructions">After clicking "start", you will have 30 seconds to click
-		as many butterflies as you can. The butterflies appear randomly so be ready! </p>
-		
-		<div id="controls">
-			<span id="score">0 pts</span>
-			<button type="button" id="start_button">Start!</button>
-		</div>
-		
-		
-		
-		<div id="gamespace">
-			<img class="game-image" src="img/butterfly.png" />
-		</div>
-		
-	</div>
-	<script> 
-	var firstName;
-		$(function(){
-		  firstName = prompt("What is your name?");
-	  });
-  </script>
+        <!-- Instructions Tab -->
+        <div id="instructions">
+          <div class="row">
+            <div class="col-3 text-center">
+              <img class="d-flex" src="img/butterflies.png" />
+            </div>
+            <div class="col-9">
+              <h1 id="game-name">Butterflies Hunting</h1>
+              <p id="greatting" class="text-center h4"></p>
+              <p id="instructions-1" class="text-center display-5">
+                Game instructions:
+              </p>
+          </div>
+          <div id="instructionsSpace">
+            <ul class="h4">
+              <li class="list-unstyled h2"><b>Welcome to Butterflies Hunting!</b></li>
+              <li class="p-2">To begin the game click the START button in the Game tab.</li>
+              <li class="p-2">After the START button was clicked you will have 30 seconds to catch as many butterflies as you can. </li>
+              <li class="p-2">Click the butterfly image to catch it.</li>
+              <li class="p-2">Each butterfly is worth 1 point. </li>
+              <li class="p-2">When the time will pass, your score will be displayed on the screen.</li>
+            </ul>
+            <p class= "text-center display-5"><b>Good Luck!!!</b>
+          
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      //Declaration of global variables that will be used in other functions. 
+      var firstName;
+      var score = 0;
+      var secondsLeft = 30;
+      var timer;
+      var img_repeat;
+      var xPos;
+      var yPos;
+      var img_list = [];
+
+      //The jQuery ready function
+      $(function () {
+        /* Added the jQueryUI tabs widget to my game. 
+        When users place their mouse over one tab
+        the content of the respective tab is displayed. */
+        $("#demoTabs").tabs({
+          event: "mouseover",
+        });
+        
+        //Prompt the player for his/her name and save the input in the firstName variable.  
+        firstName = prompt("What is your name?");
+
+        //Displaying the player name stored in the firstName variable in the paragraph with the id of greeting.
+        document.getElementById("greeting").innerHTML =
+          "Are you ready to get started <b>" + firstName + "</b> ?";
+
+        //Invoking the beginGame function when the button with the id start_button is clicked.
+        $("#start_button").click(function () {
+          beginGame();
+
+          //Turn off the click effect of the start_button after the first click.
+          $("#start_button").off("click");
+
+          /* Changing the start button background color to red and font color to white
+             after the button was clicked first time to emphasise a visual difference. */
+          $("#start_button").css({ "background-color": "red", color: "white" });
+        });
+      
+        /* Invoke the updateScore function each time the player click a butterfly image in the game space.  */
+        $("#gameSpace").on("click", "img", function () {
+          updateScore();
+          //Hide the clicked image through the fold effect.
+          $(this).toggle("fold");
+        });
+      });
+
+      //Initialize the beginGame function in which are invoked the startTimer and addImage functions.
+      function beginGame() {
+        startTimer();
+        addImage();    
+      }
+
+      //Initialize the xCoordinates function which will return a random number between 0 and 295. 
+      function xCoordinates() {
+        return Math.floor(Math.random() * 295);
+      }
+
+    //Initialize the yCoordinates function which will return a random number between 0 and 620. 
+      function yCoordinates() {
+        return Math.floor(Math.random() * 620);
+      }
+
+    //Initialize the updateScore function which will increase user score by 1 and display the score value on the scree. 
+      function updateScore() {
+        score += 1;
+        $("#score").html(score + " points");
+      }
+
+      /*Initialize the startTimer function. 
+        When the secondsLeft reach 0, this function will invoke the endGame function. 
+        When the secondsLeft are between 30 and 1, this function will show the game-timer with the amount of seconds left. 
+        It also will decrease the value of secondsLeft by one, update the clock each second, and invoke the removeImg function.
+        During playing time, users will not be able to move between tabs. 
+      */
+      function startTimer() {
+        if (secondsLeft < 0) {
+          $( "#demoTabs" ).tabs( "enable");
+          endGame();
+        } else {
+          $( "#demoTabs" ).tabs( "disable");
+          $("#game-timer").show();
+          $("#game-timer").html(secondsLeft + " seconds left");
+          secondsLeft -= 1;
+          clock = setTimeout("startTimer()", 1000);
+          removeImg();
+        }
+      }
+
+      /* Initialize the addImage function which invoke the xCoordinate and yCoordinate functions and store their values in two variables. 
+        Also, append the image of the butterflies in a random position, with a random id, and in a random time interval. 
+      */
+      var imgCount = 1;
+      function addImage() {
+        xPos = xCoordinates();
+        yPos = yCoordinates();
+        $("#gameSpace").append(
+          `<img class='game-image' id='img${imgCount}' src='img/butterfly.png' 
+          style = 'top:${xPos}px;
+            left:${yPos}px;'/>` 
+        );
+        imgCount++;
+        var random_interval = Math.floor(Math.random() * 1200);
+        img_repeat = setTimeout("addImage()", random_interval);
+      }
+      /*Initialize the removeImage function which stores the id of each image added through attr method and push it to the img_array.
+      The index number of the img id is randomly selected from the array and stored in the selectImg variable.
+       We use the selectImg value to hide img through fadeOut method in a random time interval */
+      function removeImg() {
+          $('img').each(function () {
+              var img = $(this).attr("id");
+              img_list.push(img);
+              var selectImg = Math.floor((Math.random() * img_list.length) + 1);
+              var random_interval_2 = Math.floor(Math.random() * 1200);
+              $('#img'+selectImg).fadeOut(random_interval_2);
+      });
+    }
+
+
+      /* Initialize  the restartGame function which displays the user score and ask to play agin through a confirm() alert. 
+        If the user chose to play again the entire game will reload(). 
+        If the user chose to not play a good bye message will be alert. */
+        function restartGame() {
+              var response = confirm("Time is over. Your cough: " + score +" butterflies. Would you like to play a new game?");
+              if (response == true) {
+                  location.reload();
+              }
+              else {
+                  alert("Thank you for playing with us " + firstName + ". See you next time!");
+              }
+        }
+
+        /* Initialize the endGame method which remove the image 
+          and their click effect, call the restartGame function and clearTimeout of timer and img_repeat. */
+
+        function endGame() {
+          $("#gameSpace").off("click","img");
+          $(".game-image").remove();
+          clearTimeout(timer);
+          clearTimeout(img_repeat);
+          restartGame();
+        }
+    </script>
   </body>
 </html>
